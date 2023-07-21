@@ -1,6 +1,6 @@
 # Arjuno Travel API
 
-Arjuno Travel API is a backend system for managing travel booking operations in the Arjuno Travel Booking Management System.
+Arjuno Travel API is a backend system for managing travel booking operations in "Arjuno Travel Booking Management System".
 
 ## Description
 
@@ -37,7 +37,7 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 2. Install dependencies: `composer install`
 3. Configure the environment file: `cp .env.example .env`
 4. Generate application key: `php artisan key:generate`
-5. Set up the database connection in the `.env` file.
+5. Set up the database connection (and Stripe configuration) in the `.env` file.
 6. Run database migrations: `php artisan migrate`
 
 ## Usage
