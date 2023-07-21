@@ -140,7 +140,7 @@
     <section class="bg-gray-50">
         <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16">
         <h2 class="mb-8 text-3xl font-extrabold tracking-tight leading-tight text-center text-gray-900 lg:mb-16 md:text-4xl">Statistik Pelanggan</h2>
-            <div class="flex items-center justify-center space-x-48">
+            <div class="flex items-center justify-evenly flex-wrap">
                 <div class="flex flex-col items-center justify-center">
                 <h3 class="text-pink-400 text-4xl font-extrabold">1,000+</h3>
                 <p>Pelanggan</p>
