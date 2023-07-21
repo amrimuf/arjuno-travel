@@ -31,14 +31,55 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 - `PUT /api/travel/{id}`: Update a travel package (for authorized users only).
 - `DELETE /api/travel/{id}`: Delete a travel package (for authorized users only).
 
+## Database Schema
+
+### Table: users
+
+| Column         | Type          | Nullable | Key     | Default | Extra          |
+|----------------|---------------|----------|---------|---------|----------------|
+| id             | int(11)       | No       | Primary | None    | Auto Increment |
+| name           | varchar(255)  | No       | None    | None    |                |
+| role           | varchar(255)  | Yes      | None    | None    |                |
+| email          | varchar(255)  | No       | Unique  | None    |                |
+| password       | varchar(255)  | No       | None    | None    |                |
+| created_at     | timestamp     | No       | None    | None    |                |
+| updated_at     | timestamp     | No       | None    | None    |                |
+
+### Table: travels
+
+| Column         | Type          | Nullable | Key     | Default | Extra          |
+|----------------|---------------|----------|---------|---------|----------------|
+| id             | int(11)       | No       | Primary | None    | Auto Increment |
+| price          | decimal(10,2) | No       | None    | None    |                |
+| origin         | varchar(255)  | No       | None    | None    |                |
+| destination    | varchar(255)  | No       | None    | None    |                |
+| departure_time | datetime      | No       | None    | None    |                |
+| user_id        | int(11)       | No       | Foreign | None    |                |
+| is_available   | tinyint(1)    | No       | None    | 1       |                |
+| created_at     | timestamp     | No       | None    | None    |                |
+| updated_at     | timestamp     | No       | None    | None    |                |
+
+### Table: bookings
+
+| Column         | Type          | Nullable | Key     | Default | Extra          |
+|----------------|---------------|----------|---------|---------|----------------|
+| id             | int(11)       | No       | Primary | None    | Auto Increment |
+| user_id        | int(11)       | No       | Foreign | None    |                |
+| travel_id      | int(11)       | No       | Foreign | None    |                |
+| created_at     | timestamp     | No       | None    | None    |                |
+| updated_at     | timestamp     | No       | None    | None    |                |
+
+
 ## Installation and Setup
 
 1. Clone the repository: `git clone https://github.com/amrimuf/arjuno-travel`
-2. Install dependencies: `composer install`
-3. Configure the environment file: `cp .env.example .env`
-4. Generate application key: `php artisan key:generate`
-5. Set up the database connection (and Stripe configuration) in the `.env` file.
-6. Run database migrations: `php artisan migrate`
+2. Install PHP dependencies: `composer install`
+3. Install Node.js dependencies: `npm install`
+4. Configure the environment file: `cp .env.example .env`
+5. Generate the application key: `php artisan key:generate`
+6. Set up the database connection (and Stripe configuration) in the `.env` file.
+7. Run database migrations: `php artisan migrate`
+8. Compile assets with Tailwind CSS: `npm run dev`
 
 ## Usage
 
@@ -49,6 +90,7 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 
 - PHP 8.1.6
 - Laravel 10.10
+- Tailwind CSS
 - Stripe 10.18
 - MySQL
 - Swagger
