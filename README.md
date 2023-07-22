@@ -93,7 +93,7 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 4. Configure the environment file: `cp .env.example .env`
 5. Generate the application key: `php artisan key:generate`
 6. Set up the database connection (and Stripe configuration) in the `.env` file.
-7. Run database migrations: `php artisan migrate`
+7. Run database migrations with seeding: `php artisan migrate --seed`
 8. Compile assets with Tailwind CSS: `npm run dev`
 
 ## Usage
