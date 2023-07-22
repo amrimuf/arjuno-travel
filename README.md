@@ -19,31 +19,44 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 
 ## Endpoints
 
+### User Authentication
 - `POST /api/register`: Register a new user with name, email, password, and role (admin or user).
 - `POST /api/login`: Authenticate user and get an access token for protected endpoints.
-- `GET /api/travel`: Get a list of available travel packages with optional filters.
-- `GET /api/travel/{id}`: Get detailed information about a specific travel package.
-- `POST /api/payment/{bookingId}`: Process payment for a travel booking using a Stripe token.
-- `PUT /api/users`: Update the user profile with new information.
+- `POST /api/logout`: Logout the authenticated user.
+- `PUT /api/users`: Update the user profile with new information (for authenticated users only).
 - `GET /api/users`: Get a list of all users (for authorized users only).
-- `GET /api/users/{user}`: Get a specific user by ID (for authorized users only).
-- `POST /api/travel`: Add a new travel package (for authorized users only).
-- `PUT /api/travel/{id}`: Update a travel package (for authorized users only).
-- `DELETE /api/travel/{id}`: Delete a travel package (for authorized users only).
+- `GET /api/users/{id}`: Get a specific user by ID (for authorized users only).
+
+### Travel Packages
+- `GET /api/travel`: Get a list of available travel packages with optional filters.
+  - Query Parameters: `price`, `origin`, `destination`, `departure_time`.
+- `GET /api/travel/{id}`: Get detailed information about a specific travel package.
+- `POST /api/travel`: Add a new travel package (for authenticated users only).
+- `PUT /api/travel/{id}`: Update a travel package (for authenticated users only).
+- `DELETE /api/travel/{id}`: Delete a travel package (for authenticated users only).
+
+### Booking
+- `POST /api/bookings`: Book a travel package (for authenticated users only).
+- `GET /api/bookings`: Get a list of user bookings (for authenticated users only).
+- `DELETE /api/bookings/{id}`: Cancel a booked travel package (for authenticated users only).
+
+### Payment
+- `POST /api/payment/{id}`: Process payment for a travel booking using a Stripe token (for authenticated users only).
+
 
 ## Database Schema
 
 ### Table: users
 
-| Column         | Type          | Nullable | Key     | Default | Extra          |
-|----------------|---------------|----------|---------|---------|----------------|
-| id             | int(11)       | No       | Primary | None    | Auto Increment |
-| name           | varchar(255)  | No       | None    | None    |                |
-| role           | varchar(255)  | Yes      | None    | None    |                |
-| email          | varchar(255)  | No       | Unique  | None    |                |
-| password       | varchar(255)  | No       | None    | None    |                |
-| created_at     | timestamp     | No       | None    | None    |                |
-| updated_at     | timestamp     | No       | None    | None    |                |
+| Column     | Type         | Nullable | Key     | Default | Extra          |
+|------------|--------------|----------|---------|---------|----------------|
+| id         | int(11)      | No       | Primary | None    | Auto Increment |
+| name       | varchar(255) | No       | None    | None    |                |
+| role       | boolean      | No       | None    | None    |                |
+| email      | varchar(255) | No       | Unique  | None    |                |
+| password   | varchar(255) | No       | None    | None    |                |
+| created_at | timestamp    | No       | None    | None    |                |
+| updated_at | timestamp    | No       | None    | None    |                |
 
 ### Table: travels
 
@@ -55,7 +68,7 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 | destination    | varchar(255)  | No       | None    | None    |                |
 | departure_time | datetime      | No       | None    | None    |                |
 | user_id        | int(11)       | No       | Foreign | None    |                |
-| is_available   | tinyint(1)    | No       | None    | 1       |                |
+| is_available   | boolean       | No       | None    | 1       |                |
 | created_at     | timestamp     | No       | None    | None    |                |
 | updated_at     | timestamp     | No       | None    | None    |                |
 
@@ -66,8 +79,10 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 | id             | int(11)       | No       | Primary | None    | Auto Increment |
 | user_id        | int(11)       | No       | Foreign | None    |                |
 | travel_id      | int(11)       | No       | Foreign | None    |                |
+| status         | enum          | No       | None    | booked  |                |
 | created_at     | timestamp     | No       | None    | None    |                |
 | updated_at     | timestamp     | No       | None    | None    |                |
+
 
 
 ## Installation and Setup

@@ -10,7 +10,7 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::get('/travel', [TravelController::class, 'index']);
-Route::get('/travel/{travel}', [TravelController::class, 'show']);
+Route::get('/travel/{id}', [TravelController::class, 'show']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
 
@@ -26,9 +26,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 
     Route::post('/bookings', [BookingController::class, 'bookTravel']);
     Route::get('/bookings', [BookingController::class, 'getUserBookings']);
-    Route::delete('/bookings/{bookingId}', [BookingController::class, 'cancelBooking']);
+    Route::delete('/bookings/{id}', [BookingController::class, 'cancelBooking']);
 
-    Route::post('/payment/{bookingId}', [PaymentController::class, 'processPayment']);
+    Route::post('/payment/{id}', [PaymentController::class, 'processPayment']);
 });
 
 

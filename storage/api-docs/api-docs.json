@@ -245,16 +245,16 @@
                 ]
             }
         },
-        "/api/users/{user}": {
+        "/api/users/{id}": {
             "get": {
                 "tags": [
                     "Users"
                 ],
                 "summary": "Get a user by ID",
-                "operationId": "f3e10258cf3092c32e046b2d57a6e30c",
+                "operationId": "6e390560424e46b9f0549fbc4aa39904",
                 "parameters": [
                     {
-                        "name": "user",
+                        "name": "id",
                         "in": "path",
                         "description": "ID of the user to retrieve",
                         "required": true,
@@ -394,16 +394,16 @@
                 ]
             }
         },
-        "/api/bookings/{booking}": {
+        "/api/bookings/{id}": {
             "delete": {
                 "tags": [
                     "Booking"
                 ],
                 "summary": "Cancel a booking",
-                "operationId": "eda72b106080588601ba0e72c7f0004a",
+                "operationId": "5607b9009b4c4d6a2609cafcb2bbf69e",
                 "parameters": [
                     {
-                        "name": "booking",
+                        "name": "id",
                         "in": "path",
                         "description": "ID of the booking to cancel",
                         "required": true,
@@ -445,16 +445,16 @@
                 ]
             }
         },
-        "/api/payment/{bookingId}": {
+        "/api/payment/{id}": {
             "post": {
                 "tags": [
                     "Payment"
                 ],
                 "summary": "Process payment for a travel booking",
-                "operationId": "22fa3b1a5f8c6a19350fcb0d1034247f",
+                "operationId": "cb9a6f93181902856d8a267bf988170a",
                 "parameters": [
                     {
-                        "name": "travel",
+                        "name": "id",
                         "in": "path",
                         "description": "ID of the travel to book",
                         "required": true,

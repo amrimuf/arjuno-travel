@@ -6,7 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Booking;
 use App\Models\Travel;
 use App\Http\Resources\BookingResource;
+
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @OA\Schema(
@@ -61,26 +65,42 @@ class BookingController extends Controller
      */
     public function bookTravel(Request $request)
     {
-        $user = Auth::user();
-        $validatedData = $request->validate([
-            'travel_id' => 'required|exists:travel,id',
-        ]);
-
-        if ($user->role !== '0') {
-            return response()->json(['message' => 'Only customers can book travels'], 403);
+        try {
+            $user = Auth::user();
+            $validatedData = $request->validate([
+                'travel_id' => 'required|exists:travel,id',
+            ]);
+    
+            // Check if the user is a customer (role 0)
+            if ($user->role !== 0) {
+                return response()->json(['message' => 'Only customers can book travels'], Response::HTTP_FORBIDDEN);
+            }
+    
+            // Find the travel based on the travel_id
+            $travel = Travel::findOrFail($validatedData['travel_id']);
+    
+            // Additional checks for travel availability, capacity, etc.
+            // Perform the necessary validations and checks before creating the booking.
+    
+            $booking = Booking::create([
+                'user_id' => $user->id,
+                'travel_id' => $travel->id,
+            ]);
+    
+            return response()->json(['message' => 'Booking successful', 'booking' => new BookingResource($booking)], Response::HTTP_CREATED);
+    
+        } catch (ValidationException $e) {
+            // Return validation error response
+            return response()->json(['message' => $e->getMessage(), 'errors' => $e->errors()], Response::HTTP_BAD_REQUEST);
+    
+        } catch (ModelNotFoundException $e) {
+            // Return not found error response
+            return response()->json(['message' => 'Travel not found'], Response::HTTP_NOT_FOUND);
+    
+        } catch (\Exception $e) {
+            // Return generic error response
+            return response()->json(['message' => 'Something went wrong', 'error' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
-        $travel = Travel::findOrFail($validatedData['travel_id']);
-
-        // Additional checks for the travel availability, capacity, etc.
-        // Perform the necessary validations and checks before creating the booking.
-
-        $booking = Booking::create([
-            'user_id' => $user->id,
-            'travel_id' => $travel->id,
-        ]);
-
-        return response()->json(['message' => 'Booking successful', 'booking' => new BookingResource($booking)], 201);
     }
 
     /**
@@ -113,12 +133,12 @@ class BookingController extends Controller
 
         /**
      * @OA\Delete(
-     *     path="/api/bookings/{booking}",
+     *     path="/api/bookings/{id}",
      *     summary="Cancel a booking",
      *     tags={"Booking"},
      *     security={{"bearer_token":{}}},
      *     @OA\Parameter(
-     *         name="booking",
+     *         name="id",
      *         in="path",
      *         description="ID of the booking to cancel",
      *         required=true,
@@ -151,7 +171,10 @@ class BookingController extends Controller
 
         $booking = Booking::where('user_id', $user->id)->findOrFail($bookingId);
 
-        if ($booking->status === 'cancelled') {
+        if (!$booking) 
+        { 
+            return response()->json(['message' => 'Booking is already cancelled'], 404);
+        } elseif ($booking->status === 'cancelled') {
             return response()->json(['message' => 'Booking is already cancelled'], 400);
         } elseif ($booking->status === 'paid') {
             return response()->json(['message' => 'Cannot cancel a paid booking'], 422);

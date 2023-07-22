@@ -183,12 +183,12 @@ class AuthController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/users/{user}",
+     *     path="/api/users/{id}",
      *     summary="Get a user by ID",
      *     tags={"Users"},
      *     security={{"bearer_token":{}}},
      *     @OA\Parameter(
-     *         name="user",
+     *         name="id",
      *         in="path",
      *         description="ID of the user to retrieve",
      *         required=true,

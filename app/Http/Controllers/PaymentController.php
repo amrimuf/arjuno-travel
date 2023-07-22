@@ -11,11 +11,11 @@ class PaymentController extends Controller
 {
         /**
      * @OA\Post(
-     *     path="/api/payment/{bookingId}",
+     *     path="/api/payment/{id}",
      *     summary="Process payment for a travel booking",
      *     tags={"Payment"},
      *     @OA\Parameter(
-     *         name="travel",
+     *         name="id",
      *         in="path",
      *         description="ID of the travel to book",
      *         required=true,

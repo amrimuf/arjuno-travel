@@ -129,8 +129,14 @@ class TravelController extends Controller
      *     ),
      * )
      */
-    public function show(Travel $travel)
+    public function show($id)
     {
+        $travel = Travel::find($id);
+    
+        if (!$travel) {
+            return response()->json(['message' => 'Travel package not found'], 404);
+        }
+    
         return new TravelResource($travel);
     }
 
