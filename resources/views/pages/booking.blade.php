@@ -21,6 +21,7 @@
                     @endif
                 </p>
                 <p class="mb-2">Origin: {{ $booking->travel->origin }}</p>
+                <p class="mb-2">Destination: {{ $booking->travel->destination }}</p>
                 <p class="mb-2">Price: {{ $booking->travel->price }}</p>
                 <p class="mb-2">Departure Time: {{ $booking->travel->departure_time }}</p>
                 <p class="mb-2">Booked at: {{ $booking['created_at'] }}</p>
