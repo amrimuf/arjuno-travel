@@ -1,6 +1,6 @@
-# Arjuno Travel API
+# Arjuno Travel Web App
 
-Arjuno Travel API is a backend system for managing travel booking operations in "Arjuno Travel Booking Management System".
+Arjuno Travel Web App is a system for managing travel booking operations in "Arjuno Travel Booking Management System". It consists of a backend API and a frontend interface for users to interact with.
 
 ## Description
 
@@ -88,17 +88,20 @@ Arjuno Travel Booking Management System is designed to facilitate the booking of
 ## Installation and Setup
 
 1. Clone the repository: `git clone https://github.com/amrimuf/arjuno-travel`
-2. Install PHP dependencies: `composer install`
-3. Install Node.js dependencies: `npm install`
-4. Configure the environment file: `cp .env.example .env`
-5. Generate the application key: `php artisan key:generate`
-6. Set up the database connection (and Stripe configuration) in the `.env` file.
-7. Run database migrations with seeding: `php artisan migrate --seed`
-8. Compile assets with Tailwind CSS: `npm run dev`
+2. Navigate to the project directory: `cd arjuno-travel`
+3. Install PHP dependencies: `composer install`
+4. Install Node.js dependencies: `npm install`
+5. Configure the environment file: `cp .env.example .env`
+6. Generate the application key: `php artisan key:generate`
+7. Set up the database connection (and Stripe configuration) in the `.env` file.
+8. Run XAMPP and start Apache and MySQL services.
+9. Run database migrations with seeding: `php artisan migrate --seed`
+10. Compile assets with Tailwind CSS: `npm run dev`
 
 ## Usage
 
 1. Start the development server: `php artisan serve`
+2. Access the frontend interface at  `http://localhost:8000/`
 2. Access the API documentation at `http://localhost:8000/api/documentation`
 
 ## Technologies Used
